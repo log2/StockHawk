@@ -3,6 +3,7 @@ package com.udacity.stockhawk.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -86,14 +87,17 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         xAxis.setLabelRotationAngle(45f);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(TimeUnit.DAYS.toMillis(14));
-        xAxis.setDrawGridLines(false);
+        xAxis.setTextSize(14);
+        xAxis.setDrawGridLines(true);
 
         YAxis leftAxis = candleStickChart.getAxisLeft();
 //        leftAxis.setEnabled(false);
         leftAxis.setLabelCount(7, false);
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setDrawAxisLine(false);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawAxisLine(true);
 
+        candleStickChart.setVisibleXRange(10, 15);
+        candleStickChart.setAutoScaleMinMaxEnabled(true);
 
         YAxis rightAxis = candleStickChart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -132,16 +136,23 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public void onLoadFinished(Loader<List<HistoricalQuote>> loader, List<HistoricalQuote> data) {
-        List<CandleEntry> yVals1 = new ArrayList<CandleEntry>(data.size());
+        List<HistoricalQuote> reducedData = FormattingHelper.reducePoints(data, 12);
+        List<CandleEntry> yVals1 = new ArrayList<CandleEntry>(reducedData.size());
 
-        for (HistoricalQuote historicalQuote : data) {
+        for (HistoricalQuote historicalQuote : reducedData) {
 
-            yVals1.add(new CandleEntry(
-                    (float) (historicalQuote.getDate().getTimeInMillis()), historicalQuote.getHigh().floatValue(),
-                    historicalQuote.getLow().floatValue(), historicalQuote.getOpen().floatValue(),
-                    historicalQuote.getClose().floatValue(),
-                    null
-            ));
+            float high = historicalQuote.getHigh().floatValue();
+            float low = historicalQuote.getLow().floatValue();
+            float open = historicalQuote.getOpen().floatValue();
+            float close = historicalQuote.getClose().floatValue();
+            CandleEntry candleEntry = new CandleEntry(
+                    (float) (historicalQuote.getDate().getTimeInMillis()), high,
+                    low, open,
+                    close,
+                    null // getResources().getDrawable(android.R.drawable.star_big_on)
+            );
+            //Timber.v(low + " " + open + " - " + close + " - " + high);
+            yVals1.add(candleEntry);
         }
 
         Collections.sort(yVals1, new Comparator<CandleEntry>() {
@@ -151,6 +162,22 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             }
         });
         CandleDataSet set1 = new CandleDataSet(yVals1, "Data Set");
+        set1.setDecreasingColor(Color.RED);
+        set1.setDecreasingPaintStyle(Paint.Style.FILL);
+        set1.setIncreasingColor(Color.GREEN);
+        set1.setIncreasingPaintStyle(Paint.Style.FILL);
+        set1.setBarSpace(12);
+        set1.setShadowColorSameAsCandle(true);
+        set1.setShadowWidth(12);
+        set1.setShowCandleBar(true);
+        set1.setDrawVerticalHighlightIndicator(true);
+        set1.setNeutralColor(Color.GRAY);
+        set1.setShadowColor(Color.YELLOW);
+        set1.setValueTextSize(16);
+        set1.setDrawValues(true);
+        set1.setDrawHorizontalHighlightIndicator(true);
+        set1.setHighlightLineWidth(1);
+
         candleStickChart.setData(new CandleData(set1));
         candleStickChart.invalidate();
     }

@@ -221,8 +221,8 @@ public final class QuoteSyncJob {
         return new HistoricalQuote("",
                 parseDate(Utils.getLong(data[0])),
                 Utils.getBigDecimal(data[1]),
-                Utils.getBigDecimal(data[2]),
                 Utils.getBigDecimal(data[3]),
+                Utils.getBigDecimal(data[2]),
                 Utils.getBigDecimal(data[4]),
                 Utils.getBigDecimal(data[5]),
                 Utils.getLong(data[6])

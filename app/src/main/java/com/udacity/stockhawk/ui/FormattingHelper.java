@@ -3,6 +3,7 @@ package com.udacity.stockhawk.ui;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -52,6 +53,17 @@ public class FormattingHelper {
         });
     }
 
+    @NonNull
+    public static List<HistoricalQuote> reducePoints(@NonNull List<HistoricalQuote> historicalQuotes, int maxSize) {
+        List<HistoricalQuote> reducedSize = new ArrayList<>(maxSize);
+        for (int i = 0; i < maxSize; i++) {
+            float mul = historicalQuotes.size() - 1;
+            int div = maxSize - 1;
+            reducedSize.add(historicalQuotes.get((int) ((i * mul) / div)));
+        }
+        return reducedSize;
+    }
+
     public void setLine(final Cursor cursor, final TextView tvSymbol, final TextView tvPrice, final TextView tvChange, final SparkView sparkView) {
         new PrettyPrinter() {
             @Override
@@ -67,14 +79,7 @@ public class FormattingHelper {
     }
 
     private List<HistoricalQuote> reducePoints(List<HistoricalQuote> historicalQuotes) {
-        int size = 30;
-        List<HistoricalQuote> reducedSize = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            float mul = historicalQuotes.size() - 1;
-            int div = size - 1;
-            reducedSize.add(historicalQuotes.get((int) ((i * mul) / div)));
-        }
-        return reducedSize;
+        return reducePoints(historicalQuotes, 30);
     }
 
     public void setLine(final Cursor cursor, final RemoteViews views, @IdRes final int symbolId, @IdRes final int priceId, @IdRes final int changeId) {
