@@ -42,4 +42,5 @@
     <string name="exampleQuoteSymbol">GOOG</string>
     <string name="exampleQuoteValue">1000.00</string>
     <string name="exampleQuotePercentage">100%</string>
+    <string name="widgetTitle">Today stock</string>
 </resources>

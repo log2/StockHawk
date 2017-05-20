@@ -8,10 +8,12 @@
         android:id="@+id/dialog_stock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/addQuoteBottomMargin"
+        android:layout_marginEnd="@dimen/addQuoteHorizontalMargin"
+        android:layout_marginLeft="@dimen/addQuoteHorizontalMargin"
+        android:layout_marginRight="@dimen/addQuoteHorizontalMargin"
+        android:layout_marginStart="@dimen/addQuoteHorizontalMargin"
+        android:layout_marginTop="@dimen/addQuoteTopMargin"
         android:hint="@string/dialog_hint"
         android:inputType="textCapCharacters" />
 
