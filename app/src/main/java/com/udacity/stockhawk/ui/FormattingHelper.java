@@ -45,38 +45,55 @@ public class FormattingHelper {
         });
     }
 
-    public void setLine(Cursor cursor, TextView tvSymbol, TextView tvPrice, TextView tvChange) {
-
-        tvSymbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
-        tvPrice.setText(dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
-
-        float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
-        float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
-
-        tvChange.setBackgroundResource(rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red);
-
-        String change = dollarFormatWithPlus.format(rawAbsoluteChange);
-        String percentage = percentageFormat.format(percentageChange / 100);
-
-        tvChange.setText(displayModeSupplier.isDisplayModeAbsolute() ? change : percentage);
+    public void setLine(Cursor cursor, final TextView tvSymbol, final TextView tvPrice, final TextView tvChange) {
+        new PrettyPrinter() {
+            @Override
+            void display(String symbol, String price, int backgroundResource, String change) {
+                tvSymbol.setText(symbol);
+                tvPrice.setText(price);
+                tvChange.setBackgroundResource(backgroundResource);
+                tvChange.setText(change);
+            }
+        }.go(cursor);
     }
 
-    public void setLine(Cursor cursor, RemoteViews views, @IdRes int symbolId, @IdRes int priceId, @IdRes int changeId) {
-        views.setTextViewText(symbolId, cursor.getString(Contract.Quote.POSITION_SYMBOL));
-        views.setTextViewText(priceId, dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
-
-        float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
-        float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
-
-        views.setInt(changeId, "setBackgroundResource", rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red);
-
-        String change = dollarFormatWithPlus.format(rawAbsoluteChange);
-        String percentage = percentageFormat.format(percentageChange / 100);
-
-        views.setTextViewText(changeId, displayModeSupplier.isDisplayModeAbsolute() ? change : percentage);
+    public void setLine(final Cursor cursor, final RemoteViews views, @IdRes final int symbolId, @IdRes final int priceId, @IdRes final int changeId) {
+        new PrettyPrinter() {
+            @Override
+            void display(String symbol, String price, int backgroundResource, String change) {
+                views.setTextViewText(symbolId, symbol);
+                views.setTextViewText(priceId, price);
+                views.setInt(changeId, "setBackgroundResource", backgroundResource);
+                views.setTextViewText(changeId, change);
+            }
+        }.go(cursor);
     }
 
     public interface DisplayModeSupplier {
         boolean isDisplayModeAbsolute();
+    }
+
+    private abstract class PrettyPrinter {
+        /**
+         * Will code for a tuple, but any product class is appreciated.
+         * Sir, would you mind sparing a tuple for a poor Scala traveller stranded in this pre-lambda world?
+         */
+        abstract void display(String symbol, String price, int backgroundResource, String change);
+
+        void go(Cursor cursor) {
+            String symbol = cursor.getString(Contract.Quote.POSITION_SYMBOL);
+            String price = dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE));
+
+            float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
+            float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
+
+            int backgroundResource = rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red;
+
+            String change = dollarFormatWithPlus.format(rawAbsoluteChange);
+            String percentage = percentageFormat.format(percentageChange / 100);
+            String changeText = displayModeSupplier.isDisplayModeAbsolute() ? change : percentage;
+
+            display(symbol, price, backgroundResource, changeText);
+        }
     }
 }
