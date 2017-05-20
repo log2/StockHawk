@@ -12,6 +12,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.sync.AppIdentity;
 import com.udacity.stockhawk.ui.FormattingHelper;
+import com.udacity.stockhawk.ui.StockDetailActivity;
 
 import timber.log.Timber;
 
@@ -77,15 +78,9 @@ public class QuoteWidgetRemoteViewsService extends RemoteViewsService {
                         R.layout.widget_collection_item);
                 formattingHelper.setLine(data, views, R.id.symbol, R.id.price, R.id.change);
 
-
-//                final Intent fillInIntent = new Intent();
-//                String locationSetting =
-//                        Utility.getPreferredLocation(DetailWidgetRemoteViewsService.this);
-//                Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-//                        locationSetting,
-//                        dateInMillis);
-//                fillInIntent.setData(weatherUri);
-//                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
+                final Intent fillInIntent = new Intent();
+                fillInIntent.putExtra(StockDetailActivity.STOCK_KEY, data.getString(Contract.Quote.POSITION_SYMBOL));
+                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
                 return views;
             }
 

@@ -2,6 +2,7 @@ package com.udacity.stockhawk.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -58,6 +59,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        candleStickChart.setBackgroundColor(Color.WHITE);
     }
 
     @Override
@@ -101,12 +103,13 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
                     (float) (historicalQuote.getDate().getTimeInMillis()), historicalQuote.getHigh().floatValue(),
                     historicalQuote.getLow().floatValue(), historicalQuote.getOpen().floatValue(),
                     historicalQuote.getClose().floatValue(),
-                    getResources().getDrawable(android.R.drawable.star_on)
+                    null
             ));
         }
 
         CandleDataSet set1 = new CandleDataSet(yVals1, "Data Set");
         candleStickChart.setData(new CandleData(set1));
+        candleStickChart.invalidate();
     }
 
     @Override
