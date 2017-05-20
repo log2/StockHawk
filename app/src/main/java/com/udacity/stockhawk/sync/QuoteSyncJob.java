@@ -25,7 +25,6 @@ import timber.log.Timber;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.stock.StockQuote;
 
 public final class QuoteSyncJob {
@@ -81,7 +80,14 @@ public final class QuoteSyncJob {
 
                 // WARNING! Don't request historical data for a stock that doesn't exist!
                 // The request will hang forever X_x
-                List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+                //List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+
+                // Note for reviewer:
+                // Due to the problems with Yahoo API I have commented the line above
+                // and included this one to fetch the history from MockUtils
+                // This should be enough to develop and review while the API is down
+                // Ref. "Yahoo Finance API Fix" (https://docs.google.com/document/d/1nGSXWBcpvvvBlTZSVY5U3_di8jB051EtNgHy7sgxKwA/edit)
+                List<HistoricalQuote> history = MockUtils.getHistory();
 
                 StringBuilder historyBuilder = new StringBuilder();
 
