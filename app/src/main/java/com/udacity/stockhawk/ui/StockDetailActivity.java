@@ -26,6 +26,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 public class StockDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<HistoricalQuote>> {
 
+    public static final String STOCK_KEY = "stock";
     private static final int DATA_LOADER = 42;
     @BindView(R.id.chart)
     CandleStickChart candleStickChart;
@@ -40,8 +41,8 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         ButterKnife.bind(this);
         Intent intent = getIntent();
         getSupportLoaderManager().initLoader(DATA_LOADER, null, this);
-        if (intent != null && intent.hasExtra(Intent.EXTRA_KEY_EVENT)) {
-            String stock = intent.getStringExtra(Intent.EXTRA_KEY_EVENT);
+        if (intent != null && intent.hasExtra(STOCK_KEY)) {
+            String stock = intent.getStringExtra(STOCK_KEY);
 
             LoaderManager loaderManager = getSupportLoaderManager();
             Loader<List<HistoricalQuote>> loader = loaderManager.getLoader(DATA_LOADER);
@@ -73,9 +74,10 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             @Override
             public List<HistoricalQuote> loadInBackground() {
                 String stock = args.getString("STOCK");
-                Cursor cursor = getContentResolver().query(Contract.Quote.URI, null, Contract.Quote.POSITION_SYMBOL + " = ?", new String[]{stock}, null);
+                Cursor cursor = getContentResolver().query(Contract.Quote.URI, null, Contract.Quote.COLUMN_SYMBOL + " = ?", new String[]{stock}, null);
                 try {
                     if (cursor != null && cursor.getCount() == 1) {
+                        cursor.moveToFirst();
                         String historicalData = cursor.getString(Contract.Quote.POSITION_HISTORY);
                         List<HistoricalQuote> historicalQuotes = QuoteSyncJob.parseHistoricalData(historicalData);
                         return historicalQuotes;

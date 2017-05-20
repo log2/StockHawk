@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // FIXME add support for details
         Timber.d("Symbol clicked: %s", symbol);
         Intent intent = new Intent(this, StockDetailActivity.class);
-        intent.putExtra(Intent.EXTRA_UID, symbol);
+        intent.putExtra(StockDetailActivity.STOCK_KEY, symbol);
         startActivity(intent);
     }
 
