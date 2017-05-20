@@ -52,20 +52,12 @@ public class FormattingHelper {
         float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
         float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
 
-        if (rawAbsoluteChange > 0) {
-            tvChange.setBackgroundResource(R.drawable.percent_change_pill_green);
-        } else {
-            tvChange.setBackgroundResource(R.drawable.percent_change_pill_red);
-        }
+        tvChange.setBackgroundResource(rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red);
 
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
         String percentage = percentageFormat.format(percentageChange / 100);
 
-        if (displayModeSupplier.isDisplayModeAbsolute()) {
-            tvChange.setText(change);
-        } else {
-            tvChange.setText(percentage);
-        }
+        tvChange.setText(displayModeSupplier.isDisplayModeAbsolute() ? change : percentage);
     }
 
     public void setLine(Cursor cursor, RemoteViews views, int symbolId, int priceId, int changeId) {
@@ -81,11 +73,7 @@ public class FormattingHelper {
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
         String percentage = percentageFormat.format(percentageChange / 100);
 
-        if (displayModeSupplier.isDisplayModeAbsolute()) {
-            views.setTextViewText(changeId, change);
-        } else {
-            views.setTextViewText(changeId, percentage);
-        }
+        views.setTextViewText(changeId, displayModeSupplier.isDisplayModeAbsolute() ? change : percentage);
     }
 
     public interface DisplayModeSupplier {
