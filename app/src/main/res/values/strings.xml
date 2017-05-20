@@ -1,4 +1,10 @@
 <resources>
+    <!--
+        FIXME
+        Your boss says:
+"We need to prepare Stock Hawk for the Egypt release. Make sure our translators know what to change and make sure the Arabic script will format nicely."
+
+Ensure l10n works properly, ensure rtl is enabled (also start/end instead of left/right) -->
     <string name="app_name">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
@@ -31,5 +37,5 @@
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
-
+    <string name="warnNetworkDelays">Unusual network delays, please be patient...</string>
 </resources>

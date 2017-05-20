@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.ui.DelayedWarning;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +62,10 @@ public final class QuoteSyncJob {
                 return;
             }
 
+
+            // FIXME add fix for missing network
+//            Xaio-lu says:
+//            "When I opened this app for the first time without a network connection, it was a confusing blank screen. I would love a message that tells me why the screen is blank or whether my stock quotes are out of date."
             Map<String, Stock> quotes = YahooFinance.get(stockArray);
             Iterator<String> iterator = stockCopy.iterator();
 
@@ -73,6 +78,10 @@ public final class QuoteSyncJob {
 
 
                 Stock stock = quotes.get(symbol);
+
+                // FIXME add a fix for this
+//                Jamal says:
+//                "I found a bug in your app. Right now when I search for a stock quote that doesn't exist, the app crashes."
                 StockQuote quote = stock.getQuote();
 
                 float price = quote.getPrice().floatValue();
@@ -143,14 +152,14 @@ public final class QuoteSyncJob {
     }
 
 
-    public static synchronized void initialize(final Context context) {
+    public static synchronized void initialize(final Context context, DelayedWarning loadWarning) {
 
         schedulePeriodic(context);
-        syncImmediately(context);
+        syncImmediately(context, loadWarning);
 
     }
 
-    public static synchronized void syncImmediately(Context context) {
+    public static synchronized void syncImmediately(Context context, DelayedWarning loadWarning) {
 
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

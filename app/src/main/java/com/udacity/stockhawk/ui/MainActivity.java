@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String symbol) {
+//        Adebowale says:
+//        "Stock Hawk allows me to track the current price of stocks, but to track their prices over time, I need to use an external program. It would be wonderful if you could show more detail on a stock, including its price over time."
+        // FIXME add support for details
         Timber.d("Symbol clicked: %s", symbol);
     }
 
@@ -53,18 +57,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // FIXME here we get 300 ms of delay, due to initial layout inflating
+        // How to overcome this???
+        Timber.d("One");
         setContentView(R.layout.activity_main);
+        Timber.d("One and a half");
         ButterKnife.bind(this);
 
+        Timber.d("two");
         adapter = new StockAdapter(this, this);
         stockRecyclerView.setAdapter(adapter);
         stockRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Timber.d("three");
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
+
+        Timber.d("four");
         onRefresh();
 
-        QuoteSyncJob.initialize(this);
+        Timber.d("five");
+
+        try (DelayedWarning loadWarning = prepareLoadWarning()) {
+            QuoteSyncJob.initialize(this, loadWarning);
+        }
+        Timber.d("six");
+
         getSupportLoaderManager().initLoader(STOCK_LOADER, null, this);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -84,6 +102,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    private DelayedWarning prepareLoadWarning() {
+        final Snackbar progress = Snackbar.make(stockRecyclerView, R.string.warnNetworkDelays, Snackbar.LENGTH_LONG);
+        return DelayedWarning.on(new Runnable() {
+            @Override
+            public void run() {
+                progress.show();
+            }
+        }, new Runnable() {
+            @Override
+            public void run() {
+                progress.dismiss();
+            }
+        });
+    }
+
     private boolean networkUp() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -94,7 +127,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onRefresh() {
 
-        QuoteSyncJob.syncImmediately(this);
+        // FIXME add micro-message to compensate for unusual delays during network synchronization
+//        Xaio-lu says:
+//        "When I opened this app for the first time without a network connection, it was a confusing blank screen. I would love a message that tells me why the screen is blank or whether my stock quotes are out of date."
+
+        Timber.d("Starting update");
+        doSyncImmediately();
+        Timber.d("Update completed");
+
 
         if (!networkUp() && adapter.getItemCount() == 0) {
             swipeRefreshLayout.setRefreshing(false);
@@ -109,6 +149,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.VISIBLE);
         } else {
             error.setVisibility(View.GONE);
+        }
+    }
+
+    private void doSyncImmediately() {
+        try (DelayedWarning loadWarning = prepareLoadWarning()) {
+            QuoteSyncJob.syncImmediately(this, loadWarning);
         }
     }
 
@@ -127,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
 
             PrefUtils.addStock(this, symbol);
-            QuoteSyncJob.syncImmediately(this);
+            doSyncImmediately();
         }
     }
 
