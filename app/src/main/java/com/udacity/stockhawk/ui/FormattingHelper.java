@@ -67,7 +67,6 @@ public class FormattingHelper {
         float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
         float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
 
-        // FIXME enable background change
         views.setInt(changeId, "setBackgroundResource", rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red);
 
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
