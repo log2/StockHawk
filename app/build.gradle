@@ -55,6 +55,8 @@ ext {
     butterKnifeVersion = '8.5.1'
     okHttpVersion = '3.2.0'
     yahooFinanceAPI = '3.6.1'
+    guavaVersion = '21.0'
+    mpAndroidChartVersion = 'v3.0.2'
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -66,11 +68,11 @@ dependencies {
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-    compile 'com.google.guava:guava:20.0'
+    compile "com.google.guava:guava:$guavaVersion"
 
     // Yahoo Finance API updated to 3.6.1 (was 3.5.0) as suggested in https://docs.google.com/document/d/1nGSXWBcpvvvBlTZSVY5U3_di8jB051EtNgHy7sgxKwA/edit
     compile "com.yahoofinance-api:YahooFinanceAPI:$yahooFinanceAPI"
     compile 'com.jakewharton.timber:timber:4.4.0'
     compile 'net.sf.opencsv:opencsv:2.3'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    compile "com.github.PhilJay:MPAndroidChart:$mpAndroidChartVersion"
 }
