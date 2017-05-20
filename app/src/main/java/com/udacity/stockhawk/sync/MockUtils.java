@@ -19,6 +19,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 public class MockUtils {
 
+    @SuppressWarnings("StringConcatenation")
     public static String mockHistory =
             "08/05/2017,68.970001,69.559998,68.040001,68.379997,20913200,68.379997\n" +
                     "01/05/2017,68.68,69.709999,68.489998,69,24889100,69\n" +
@@ -130,6 +131,7 @@ public class MockUtils {
         ByteArrayInputStream byteArrayInputStream
                 = new ByteArrayInputStream(MockUtils.mockHistory.getBytes(StandardCharsets.UTF_8));
 
+        // FIXME l10n
         InputStreamReader is = new InputStreamReader(byteArrayInputStream);
 
         BufferedReader br = new BufferedReader(is);
@@ -160,6 +162,7 @@ public class MockUtils {
     }
 
     private static Calendar parseHistDate(String date) {
+        // FIXME l10n
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         try {
             if (isParseable(date)) {

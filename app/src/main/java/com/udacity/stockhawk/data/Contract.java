@@ -8,9 +8,13 @@ import com.google.common.collect.ImmutableList;
 
 public final class Contract {
 
+    @SuppressWarnings("HardCodedStringLiteral")
     static final String AUTHORITY = "com.udacity.stockhawk";
+    @SuppressWarnings("HardCodedStringLiteral")
     static final String PATH_QUOTE = "quote";
+    @SuppressWarnings("HardCodedStringLiteral")
     static final String PATH_QUOTE_WITH_SYMBOL = "quote/*";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
     private Contract() {
@@ -20,10 +24,15 @@ public final class Contract {
     public static final class Quote implements BaseColumns {
 
         public static final Uri URI = BASE_URI.buildUpon().appendPath(PATH_QUOTE).build();
+        @SuppressWarnings("HardCodedStringLiteral")
         public static final String COLUMN_SYMBOL = "symbol";
+        @SuppressWarnings("HardCodedStringLiteral")
         public static final String COLUMN_PRICE = "price";
+        @SuppressWarnings("HardCodedStringLiteral")
         public static final String COLUMN_ABSOLUTE_CHANGE = "absolute_change";
+        @SuppressWarnings("HardCodedStringLiteral")
         public static final String COLUMN_PERCENTAGE_CHANGE = "percentage_change";
+        @SuppressWarnings("HardCodedStringLiteral")
         public static final String COLUMN_HISTORY = "history";
         public static final int POSITION_ID = 0;
         public static final int POSITION_SYMBOL = 1;
@@ -39,6 +48,7 @@ public final class Contract {
                 COLUMN_PERCENTAGE_CHANGE,
                 COLUMN_HISTORY
         );
+        @SuppressWarnings("HardCodedStringLiteral")
         static final String TABLE_NAME = "quotes";
 
         public static Uri makeUriForStock(String symbol) {

@@ -18,6 +18,7 @@ class DbHelper extends SQLiteOpenHelper {
         super(context, NAME, null, VERSION);
     }
 
+    @SuppressWarnings({"StringConcatenation", "HardCodedStringLiteral"})
     @Override
     public void onCreate(SQLiteDatabase db) {
         String builder = "CREATE TABLE " + Quote.TABLE_NAME + " ("
