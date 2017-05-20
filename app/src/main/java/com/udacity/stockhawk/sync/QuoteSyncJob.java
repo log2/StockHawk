@@ -80,6 +80,8 @@ public final class QuoteSyncJob {
 
             ArrayList<ContentValues> quoteCVs = new ArrayList<>();
 
+            List<String> badStockSymbols = new ArrayList<>();
+
             while (iterator.hasNext()) {
                 final String symbol = iterator.next();
 
@@ -95,9 +97,11 @@ public final class QuoteSyncJob {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
+                            // FIXME can we switch to snackbar with action?
                             Toast.makeText(context, "Unknown stock symbol " + symbol, Toast.LENGTH_LONG).show();
                         }
                     });
+                    badStockSymbols.add(symbol);
                     continue;
                 }
                 float price = quote.getPrice().floatValue();
@@ -127,6 +131,10 @@ public final class QuoteSyncJob {
 
                 quoteCVs.add(quoteCV);
 
+            }
+
+            for (String badStockSymbol : badStockSymbols) {
+                PrefUtils.removeStock(context, badStockSymbol);
             }
 
             context.getContentResolver()
