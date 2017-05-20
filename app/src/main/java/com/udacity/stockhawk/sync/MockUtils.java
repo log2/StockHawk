@@ -167,7 +167,7 @@ public class MockUtils {
     }
 
     private static float noise(Random random) {
-        return (float) ((random.nextGaussian() * 2.0d - 1.0d) * 0.15d);
+        return 1.0f + (float) (random.nextGaussian() * 0.10d);
     }
 
     private static Calendar parseHistDate(String date) {
