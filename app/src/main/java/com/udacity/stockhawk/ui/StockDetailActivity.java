@@ -11,15 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +68,31 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         candleStickChart.setBackgroundColor(Color.WHITE);
+
+        XAxis xAxis = candleStickChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            private DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT);
+
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return dateFormat.format(new Date((long) value));
+            }
+        });
+        xAxis.setLabelRotationAngle(45f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(TimeUnit.DAYS.toMillis(14));
+        xAxis.setDrawGridLines(false);
+
+        YAxis leftAxis = candleStickChart.getAxisLeft();
+//        leftAxis.setEnabled(false);
+        leftAxis.setLabelCount(7, false);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawAxisLine(false);
+
+
+        YAxis rightAxis = candleStickChart.getAxisRight();
+        rightAxis.setEnabled(false);
     }
 
     @Override
@@ -76,7 +109,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             @Override
             public List<HistoricalQuote> loadInBackground() {
                 String stock = args.getString("STOCK");
-                Cursor cursor = getContentResolver().query(Contract.Quote.URI, null, Contract.Quote.COLUMN_SYMBOL + " = ?", new String[]{stock}, null);
+                Cursor cursor = getContentResolver().query(Contract.Quote.makeUriForStock(stock), null, null, null, null);
                 try {
                     if (cursor != null && cursor.getCount() == 1) {
                         cursor.moveToFirst();
