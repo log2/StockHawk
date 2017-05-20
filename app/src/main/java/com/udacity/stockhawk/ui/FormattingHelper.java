@@ -2,6 +2,7 @@ package com.udacity.stockhawk.ui;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.IdRes;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -60,7 +61,7 @@ public class FormattingHelper {
         tvChange.setText(displayModeSupplier.isDisplayModeAbsolute() ? change : percentage);
     }
 
-    public void setLine(Cursor cursor, RemoteViews views, int symbolId, int priceId, int changeId) {
+    public void setLine(Cursor cursor, RemoteViews views, @IdRes int symbolId, @IdRes int priceId, @IdRes int changeId) {
         views.setTextViewText(symbolId, cursor.getString(Contract.Quote.POSITION_SYMBOL));
         views.setTextViewText(priceId, dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
 
