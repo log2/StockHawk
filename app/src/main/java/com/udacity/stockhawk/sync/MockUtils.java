@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
 
+import timber.log.Timber;
 import yahoofinance.Utils;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -138,8 +138,7 @@ public class MockUtils {
         br.readLine(); // skip the first line
         // Parse CSV
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-
-            YahooFinance.logger.log(Level.INFO, ("Parsing CSV line: " + Utils.unescape(line)));
+            Timber.v("Parsing CSV line: " + Utils.unescape(line));
             HistoricalQuote historicalQuote = MockUtils.parseCSVLine(line);
             history.add(historicalQuote);
         }
@@ -171,8 +170,8 @@ public class MockUtils {
                 return c;
             }
         } catch (ParseException ex) {
-            YahooFinance.logger.log(Level.WARNING, "Failed to parse hist date: " + date);
-            YahooFinance.logger.log(Level.FINEST, "Failed to parse hist date: " + date, ex);
+            Timber.w("Failed to parse hist date: " + date);
+            Timber.v("Failed to parse hist date: " + date, ex);
         }
         return null;
     }
