@@ -38,4 +38,6 @@ Ensure l10n works properly, ensure rtl is enabled (also start/end instead of lef
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="warnNetworkDelays">Unusual network delays, please be patient...</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
