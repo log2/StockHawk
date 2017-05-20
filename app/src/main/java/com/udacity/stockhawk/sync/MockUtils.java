@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,14 +12,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import timber.log.Timber;
 import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 
 public class MockUtils {
 
+    private static final float AVG_FLOAT_DATA_VALUE = 58f;
     @SuppressWarnings("StringConcatenation")
     public static String mockHistory =
             "08/05/2017,68.970001,69.559998,68.040001,68.379997,20913200,68.379997\n" +
@@ -126,11 +128,13 @@ public class MockUtils {
                     "26/05/2015,46.830002,48.02,46.189999,46.860001,28180200,44.735142\n" +
                     "18/05/2015,47.98,48.220001,46.82,46.900002,25178100,44.773331";
 
-    public static List<HistoricalQuote> getHistory() throws IOException {
+    public static List<HistoricalQuote> getHistory(String symbol, float price) throws IOException {
         List<HistoricalQuote> history = new ArrayList<>();
         ByteArrayInputStream byteArrayInputStream
                 = new ByteArrayInputStream(MockUtils.mockHistory.getBytes(StandardCharsets.UTF_8));
 
+        Random random = new Random(symbol.hashCode() * 31 + Float.floatToIntBits(price));
+        float scale = price / AVG_FLOAT_DATA_VALUE;
         // FIXME l10n
         InputStreamReader is = new InputStreamReader(byteArrayInputStream);
 
@@ -138,8 +142,8 @@ public class MockUtils {
         br.readLine(); // skip the first line
         // Parse CSV
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-            Timber.v("Parsing CSV line: " + Utils.unescape(line));
-            HistoricalQuote historicalQuote = MockUtils.parseCSVLine(line);
+            //Timber.v("Parsing CSV line: " + Utils.unescape(line));
+            HistoricalQuote historicalQuote = MockUtils.parseCSVLine(line, random, scale);
             history.add(historicalQuote);
         }
 
@@ -147,17 +151,23 @@ public class MockUtils {
     }
 
 
-    private static HistoricalQuote parseCSVLine(String line) {
-        String[] data = line.split(YahooFinance.QUOTES_CSV_DELIMITER);
+    private static HistoricalQuote parseCSVLine(String line, Random random, float scale) {
+        String[] data = line.split(",");
+
+        BigDecimal factor = new BigDecimal(noise(random) * scale);
         return new HistoricalQuote("STOCK NAME",
                 parseHistDate(data[0]),
-                Utils.getBigDecimal(data[1]),
-                Utils.getBigDecimal(data[3]),
-                Utils.getBigDecimal(data[2]),
-                Utils.getBigDecimal(data[4]),
-                Utils.getBigDecimal(data[6]),
+                Utils.getBigDecimal(data[1]).multiply(factor),
+                Utils.getBigDecimal(data[3]).multiply(factor),
+                Utils.getBigDecimal(data[2]).multiply(factor),
+                Utils.getBigDecimal(data[4]).multiply(factor),
+                Utils.getBigDecimal(data[6]).multiply(factor),
                 Utils.getLong(data[5])
         );
+    }
+
+    private static float noise(Random random) {
+        return (float) ((random.nextGaussian() * 2.0d - 1.0d) * 0.15d);
     }
 
     private static Calendar parseHistDate(String date) {

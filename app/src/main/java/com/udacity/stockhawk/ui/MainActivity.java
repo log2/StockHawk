@@ -1,6 +1,7 @@
 package com.udacity.stockhawk.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //        "Stock Hawk allows me to track the current price of stocks, but to track their prices over time, I need to use an external program. It would be wonderful if you could show more detail on a stock, including its price over time."
         // FIXME add support for details
         Timber.d("Symbol clicked: %s", symbol);
+        Intent intent = new Intent(this, StockDetailActivity.class);
+        intent.putExtra(Intent.EXTRA_UID, symbol);
+        startActivity(intent);
     }
 
     @Override

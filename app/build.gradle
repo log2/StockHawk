@@ -55,12 +55,11 @@ ext {
     butterKnifeVersion = '8.5.1'
     okHttpVersion = '3.2.0'
     yahooFinanceAPI = '3.6.1'
-    guavaVersion = '21.0'
+    guavaVersion = '20.0' // The last guava version compatible with Java 7, apparently
     mpAndroidChartVersion = 'v3.0.2'
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
 
     compile "com.android.support:support-annotations:$supportLibraryVersion"
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -72,7 +71,10 @@ dependencies {
 
     // Yahoo Finance API updated to 3.6.1 (was 3.5.0) as suggested in https://docs.google.com/document/d/1nGSXWBcpvvvBlTZSVY5U3_di8jB051EtNgHy7sgxKwA/edit
     compile "com.yahoofinance-api:YahooFinanceAPI:$yahooFinanceAPI"
+    compile "com.github.PhilJay:MPAndroidChart:$mpAndroidChartVersion"
     compile 'com.jakewharton.timber:timber:4.4.0'
     compile 'net.sf.opencsv:opencsv:2.3'
-    compile "com.github.PhilJay:MPAndroidChart:$mpAndroidChartVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.robinhood.spark:spark:1.1.2'
+    testCompile 'junit:junit:4.12'
 }

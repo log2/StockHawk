@@ -25,6 +25,7 @@ FIXME add content description
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin" />
+        <!-- FIXME remove left/right, leave only start/end -->
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

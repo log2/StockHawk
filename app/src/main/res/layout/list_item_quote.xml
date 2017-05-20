@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
@@ -30,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/priceMarginEnd"
-            android:layout_marginRight="@dimen/priceMarginEnd"
             tools:text="@string/exampleQuoteValue" />
 
         <TextView
@@ -40,9 +40,17 @@
             android:layout_height="wrap_content"
             android:background="@drawable/percent_change_pill_green"
             android:paddingEnd="@dimen/changeHorizontalMargin"
-            android:paddingLeft="@dimen/changeHorizontalMargin"
-            android:paddingRight="@dimen/changeHorizontalMargin"
             android:paddingStart="@dimen/changeHorizontalMargin"
             tools:text="@string/exampleQuotePercentage" />
+
+        <com.robinhood.spark.SparkView
+            android:id="@+id/sparkview"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/holo_blue_light"
+            app:spark_lineColor="@color/colorPrimaryDark" />
     </LinearLayout>
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.robinhood.spark.SparkView;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 
@@ -50,7 +51,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     public void onBindViewHolder(StockViewHolder holder, int position) {
         cursor.moveToPosition(position);
 
-        formattingHelper.setLine(cursor, holder.symbol, holder.price, holder.change);
+        formattingHelper.setLine(cursor, holder.symbol, holder.price, holder.change, holder.sparkView);
     }
 
     @Override
@@ -68,7 +69,6 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     }
 
     class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         @BindView(R.id.symbol)
         TextView symbol;
 
@@ -77,6 +77,9 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
         @BindView(R.id.change)
         TextView change;
+
+        @BindView(R.id.sparkview)
+        SparkView sparkView;
 
         StockViewHolder(View itemView) {
             super(itemView);
