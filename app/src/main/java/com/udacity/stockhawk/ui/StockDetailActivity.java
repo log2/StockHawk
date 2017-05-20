@@ -25,6 +25,8 @@ import com.udacity.stockhawk.sync.QuoteSyncJob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -69,6 +71,8 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         candleStickChart.setBackgroundColor(Color.WHITE);
 
+        candleStickChart.setMaxVisibleValueCount(200);
+        candleStickChart.setPinchZoom(true);
         XAxis xAxis = candleStickChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -140,6 +144,12 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             ));
         }
 
+        Collections.sort(yVals1, new Comparator<CandleEntry>() {
+            @Override
+            public int compare(CandleEntry o1, CandleEntry o2) {
+                return Float.compare(o1.getX(), o2.getX());
+            }
+        });
         CandleDataSet set1 = new CandleDataSet(yVals1, "Data Set");
         candleStickChart.setData(new CandleData(set1));
         candleStickChart.invalidate();
