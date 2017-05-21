@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_weight="1"
+            android:contentDescription="@string/stock_history_chart"
             android:elevation="@dimen/chartElevation"
             android:paddingBottom="@dimen/chart_vertical_padding"
             android:paddingEnd="@dimen/chart_horizontal_padding"

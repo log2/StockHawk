@@ -63,4 +63,5 @@
     <string name="exampleErrorMessage">Error message</string>
     <string name="detailedStockContentDescription">On <xliff:g example="19/05/2017">%s</xliff:g>, stock symbol <xliff:g example="GOOG">%s</xliff:g> floated between a low of <xliff:g example="800$">%s</xliff:g> and a high of <xliff:g example="1200$">%s</xliff:g>, opening with value <xliff:g example="900$">%s</xliff:g>, and closing with value <xliff:g example="950$">%s</xliff:g>. Thus, <xliff:g example="it has soared by 3.45%">%s</xliff:g></string>
     <string name="detailToMainButtonContentDescription">Return to list of tracked stock symbols</string>
+    <string name="stock_history_chart">Stock history chart</string>
 </resources>
