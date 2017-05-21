@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.data.CandleEntry;
 import com.robinhood.spark.SparkAdapter;
 import com.robinhood.spark.SparkView;
 import com.udacity.stockhawk.R;
@@ -14,9 +15,12 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,6 +35,8 @@ public class FormattingHelper {
     private final DecimalFormat dollarFormat;
     private final DecimalFormat percentageFormat;
     private final DisplayModeSupplier displayModeSupplier;
+
+    private final DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT);
 
     public FormattingHelper(DisplayModeSupplier displayModeSupplier) {
         this.displayModeSupplier = displayModeSupplier;
@@ -54,12 +60,14 @@ public class FormattingHelper {
     }
 
     @NonNull
-    public static List<HistoricalQuote> reducePoints(@NonNull List<HistoricalQuote> historicalQuotes, int maxSize) {
-        List<HistoricalQuote> reducedSize = new ArrayList<>(maxSize);
+    public static <T> List<T> reducePoints(@NonNull List<T> originalSeries, int maxSize) {
+        if (maxSize >= originalSeries.size())
+            return originalSeries;
+        List<T> reducedSize = new ArrayList<>(maxSize);
+        float mul = originalSeries.size() - 1;
+        int div = maxSize - 1;
         for (int i = 0; i < maxSize; i++) {
-            float mul = historicalQuotes.size() - 1;
-            int div = maxSize - 1;
-            reducedSize.add(historicalQuotes.get((int) ((i * mul) / div)));
+            reducedSize.add(originalSeries.get((int) ((i * mul) / div)));
         }
         return reducedSize;
     }
@@ -92,6 +100,22 @@ public class FormattingHelper {
                 views.setTextViewText(changeId, change);
             }
         }.go(cursor);
+    }
+
+    public String format(String symbol, CandleEntry candleEntry) {
+        String price = dollarFormat.format(candleEntry.getClose());
+
+        float rawAbsoluteChange = candleEntry.getClose() - candleEntry.getOpen();
+        float percentageChange = 100 * (rawAbsoluteChange / candleEntry.getOpen());
+
+        int backgroundResource = rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red;
+
+        String change = dollarFormatWithPlus.format(rawAbsoluteChange);
+        String percentage = percentageFormat.format(percentageChange / 100);
+        String changeText = displayModeSupplier.isDisplayModeAbsolute() ? change : percentage;
+        return symbol + " " + dateFormat.format(new Date((long) candleEntry.getX())) + " " + price + " " + changeText + "\n" +
+                "Low-High: " + dollarFormat.format(candleEntry.getLow()) + " - " + dollarFormat.format(candleEntry.getHigh()) + "\n" +
+                "Open->Close: " + dollarFormat.format(candleEntry.getOpen()) + " -> " + dollarFormat.format(candleEntry.getClose());
     }
 
     public interface DisplayModeSupplier {

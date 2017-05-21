@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
     tools:context="com.udacity.stockhawk.ui.StockDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -18,18 +17,38 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="2015-01-07 -> 2017-05-21"
+
+            />
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.github.mikephil.charting.charts.CandleStickChart
-        android:id="@+id/chart"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
 
-    </com.github.mikephil.charting.charts.CandleStickChart>
+        <com.github.mikephil.charting.charts.CandleStickChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_highlighted_description"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.02"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="GOOG@2017-05-21 800-1200, 900->950 (940)" />
+
+    </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
