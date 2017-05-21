@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onClick(String symbol) {
 //        Adebowale says:
 //        "Stock Hawk allows me to track the current price of stocks, but to track their prices over time, I need to use an external program. It would be wonderful if you could show more detail on a stock, including its price over time."
-        // FIXME add support for details
+        // FIXED added support for details
         Timber.d("Symbol clicked: %s", symbol);
         Intent intent = new Intent(this, StockDetailActivity.class);
         intent.putExtra(StockDetailActivity.STOCK_KEY, symbol);
