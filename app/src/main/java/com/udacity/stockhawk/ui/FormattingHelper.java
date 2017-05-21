@@ -103,7 +103,7 @@ public class FormattingHelper {
         }.go(cursor);
     }
 
-    public void format(String symbol, CandleEntry candleEntry, TextView detailDate, TextView detailLow, TextView detailHigh, TextView detailOpen, TextView detailClose, TextView detailAbsoluteChange, TextView detailPercentageChange) {
+    public void format(@SuppressWarnings("UnusedParameters") String symbol, CandleEntry candleEntry, TextView detailDate, TextView detailLow, TextView detailHigh, TextView detailOpen, TextView detailClose, TextView detailAbsoluteChange, TextView detailPercentageChange) {
         float rawAbsoluteChange = candleEntry.getClose() - candleEntry.getOpen();
         float percentageChange = 100 * (rawAbsoluteChange / candleEntry.getOpen());
 
