@@ -18,6 +18,7 @@ public final class Contract {
     private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
     private Contract() {
+        throw new AssertionError("No Contract instances for you!");
     }
 
     @SuppressWarnings("unused")
