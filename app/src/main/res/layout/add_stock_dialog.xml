@@ -12,6 +12,7 @@
         android:layout_marginEnd="@dimen/addQuoteHorizontalMargin"
         android:layout_marginStart="@dimen/addQuoteHorizontalMargin"
         android:layout_marginTop="@dimen/addQuoteTopMargin"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="@string/dialog_hint"
         android:inputType="textCapCharacters" />
 
