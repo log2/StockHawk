@@ -8,10 +8,7 @@
     <string name="app_name">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
-
     <string name="pref_stocks_key" translatable="false">stocks</string>
-
-
     <string name="pref_display_mode_key" translatable="false">displayMode</string>
     <string name="pref_display_mode_default" translatable="false">@string/pref_display_mode_percentage_key</string>
 
@@ -34,10 +31,10 @@
     <string name="error_no_network">No network connectivity! Will load stock data when the network is available.</string>
     <string name="error_no_stocks">No stocks added! Hit the floating action button to add one.</string>
 
-    <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
+    <string name="toast_stock_added_no_connectivity">Symbol <xliff:g example="GOOG">%s</xliff:g> added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="warnNetworkDelays">Unusual network delays, please be patient…</string>
-    <string name="exampleQuoteSymbol">GOOG</string>
+    <string name="exampleQuoteSymbol" translatable="false">GOOG</string>
     <string name="exampleQuoteValue">1000.00</string>
     <string name="exampleQuotePercentage">100%</string>
     <string name="widgetTitle">Stock Hawk - at a glance</string>
