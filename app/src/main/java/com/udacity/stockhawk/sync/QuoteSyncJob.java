@@ -91,7 +91,7 @@ public final class QuoteSyncJob {
                 Stock stock = quotes.get(symbol);
 
 
-                // FIXME add a fix for this
+                // FIXED, bad stock symbol are removed as soon as possible add a fix for this
 //                Jamal says:
 //                "I found a bug in your app. Right now when I search for a stock quote that doesn't exist, the app crashes."
                 StockQuote quote = stock.getQuote();
