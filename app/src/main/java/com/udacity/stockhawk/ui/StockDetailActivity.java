@@ -10,7 +10,6 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -51,8 +50,6 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     @BindView(R.id.chart_detail)
     GridLayout chartDetail;
 
-    @BindView(R.id.tv_highlighted_description)
-    TextView tvHighlightedDescription;
 
     @BindView(R.id.detail_date)
     TextView detailDate;
@@ -138,19 +135,12 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             public void onValueSelected(Entry e, Highlight h) {
                 CandleEntry candleEntry = (CandleEntry) e;
                 formattingHelper.format(stock, candleEntry, detailDate, detailLow, detailHigh, detailOpen, detailClose, detailAbsoluteChange, detailPercentageChange);
-
-                tvHighlightedDescription.setVisibility(View.GONE);
-                chartDetail.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onNothingSelected() {
-                tvHighlightedDescription.setVisibility(View.VISIBLE);
-                chartDetail.setVisibility(View.INVISIBLE);
             }
         });
-        tvHighlightedDescription.setVisibility(View.VISIBLE);
-        chartDetail.setVisibility(View.INVISIBLE);
         candleStickChart.getLegend().setEnabled(false);
     }
 
