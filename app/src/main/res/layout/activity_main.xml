@@ -10,7 +10,7 @@
     <!--
     Hellen says:
 "Right now I can't use this app with my screen reader. My friends love it, so I would love to download it, but the buttons don't tell my screen reader what they do."
-FIXME add content description
+FIXED add content description (and even narrations) where appropriate
 -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
