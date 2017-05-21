@@ -38,7 +38,7 @@ class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        //noinspection StringConcatenation
+        //noinspection StringConcatenation,HardCodedStringLiteral
         db.execSQL(" DROP TABLE IF EXISTS " + Quote.TABLE_NAME);
 
         onCreate(db);

@@ -25,8 +25,8 @@ import timber.log.Timber;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class QuoteWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.quote_widget_provider);
 

@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         StockAdapter.StockAdapterOnClickHandler {
 
     private static final int STOCK_LOADER = 42;
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.recycler_view)
     RecyclerView stockRecyclerView;
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.error)
     TextView error;
     private StockAdapter adapter;
@@ -175,11 +175,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void doSyncImmediately() {
         try (DelayedWarning loadWarning = prepareLoadWarning()) {
-            QuoteSyncJob.syncImmediately(this, loadWarning);
+            QuoteSyncJob.syncImmediately(this);
         }
     }
 
     public void button(@SuppressWarnings("UnusedParameters") View view) {
+        //noinspection HardCodedStringLiteral
         new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
     }
 

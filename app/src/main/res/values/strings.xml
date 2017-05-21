@@ -57,4 +57,5 @@
     <string name="stockStymbolDeleted">Stock <xliff:g example="GOOG">{0}</xliff:g> is not tracked anymore</string>
     <string name="stockSymbolAddedAgain">Stock <xliff:g example="GOOG">{0}</xliff:g> is tracked again as required</string>
     <string name="undoRemoval">UNDO</string>
+    <string name="unknownStockSymbol">Unknown stock symbol <xliff:g example="GOOG">{0}</xliff:g></string>
 </resources>

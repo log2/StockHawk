@@ -16,7 +16,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="priceMarginEnd">10sp</dimen>
     <dimen name="chart_vertical_padding">16dp</dimen>
     <dimen name="chart_horizontal_padding">16dp</dimen>
-    <dimen name="detail_vertical_margin">8dp</dimen>
     <dimen name="detail_horizontal_margin">0dp</dimen>
     <dimen name="detail_vertical_padding">16dp</dimen>
     <dimen name="detail_horizontal_padding">16dp</dimen>

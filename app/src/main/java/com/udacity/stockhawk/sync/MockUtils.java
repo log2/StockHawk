@@ -22,7 +22,7 @@ public class MockUtils {
 
     private static final float AVG_FLOAT_DATA_VALUE = 58f;
     @SuppressWarnings("StringConcatenation")
-    public static String mockHistory =
+    private static final String mockHistory =
             "08/05/2017,68.970001,69.559998,68.040001,68.379997,20913200,68.379997\n" +
                     "01/05/2017,68.68,69.709999,68.489998,69,24889100,69\n" +
                     "24/04/2017,67.480003,69.139999,67.099998,68.459999,31679200,68.459999\n" +
@@ -135,7 +135,8 @@ public class MockUtils {
 
         Random random = new Random(symbol.hashCode() * 31 + Float.floatToIntBits(price));
         float scale = price / AVG_FLOAT_DATA_VALUE;
-        // FIXME l10n
+        // FIXED no l10n issue, we work on a constant with known charset (UTF-8, see above)
+        //noinspection ImplicitDefaultCharsetUsage
         InputStreamReader is = new InputStreamReader(byteArrayInputStream);
 
         BufferedReader br = new BufferedReader(is);

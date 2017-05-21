@@ -90,12 +90,13 @@ public class FormattingHelper {
         return reducePoints(historicalQuotes, 30);
     }
 
-    public void setLine(final Cursor cursor, final RemoteViews views, @IdRes final int symbolId, @IdRes final int priceId, @IdRes final int changeId) {
+    public void setLine(final Cursor cursor, final RemoteViews views, @SuppressWarnings("SameParameterValue") @IdRes final int symbolId, @SuppressWarnings("SameParameterValue") @IdRes final int priceId, @SuppressWarnings("SameParameterValue") @IdRes final int changeId) {
         new PrettyPrinter() {
             @Override
             void display(String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
                 views.setTextViewText(symbolId, symbol);
                 views.setTextViewText(priceId, price);
+                //noinspection HardCodedStringLiteral
                 views.setInt(changeId, "setBackgroundResource", backgroundResource);
                 views.setTextViewText(changeId, change);
             }

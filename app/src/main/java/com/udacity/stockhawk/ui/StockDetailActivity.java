@@ -46,24 +46,32 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     @SuppressWarnings("HardCodedStringLiteral")
     public static final String STOCK_KEY = "stock";
     private static final int DATA_LOADER = 42;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.chart)
     CandleStickChart candleStickChart;
     @BindView(R.id.chart_detail)
     GridLayout chartDetail;
 
 
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_date)
     TextView detailDate;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_low)
     TextView detailLow;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_high)
     TextView detailHigh;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_open)
     TextView detailOpen;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_close)
     TextView detailClose;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_absolute_change)
     TextView detailAbsoluteChange;
+    @SuppressWarnings({"CanBeFinal", "WeakerAccess"})
     @BindView(R.id.detail_percentage_change)
     TextView detailPercentageChange;
 
@@ -107,6 +115,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         XAxis xAxis = candleStickChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @SuppressWarnings("CanBeFinal")
             private DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT);
 
             @Override

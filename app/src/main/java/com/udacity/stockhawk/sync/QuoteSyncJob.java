@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.ui.DelayedWarning;
@@ -20,6 +21,7 @@ import com.udacity.stockhawk.ui.DelayedWarning;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -98,7 +100,7 @@ public final class QuoteSyncJob {
                         @Override
                         public void run() {
                             // FIXME can we switch to snackbar with action? But where can we find a view?
-                            Toast.makeText(context, "Unknown stock symbol " + symbol, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, MessageFormat.format(context.getString(R.string.unknownStockSymbol), symbol), Toast.LENGTH_LONG).show();
                         }
                     });
                     badStockSymbols.add(symbol);
@@ -191,10 +193,10 @@ public final class QuoteSyncJob {
 
     public static synchronized void initialize(final Context context, DelayedWarning loadWarning) {
         schedulePeriodic(context);
-        syncImmediately(context, loadWarning);
+        syncImmediately(context);
     }
 
-    public static synchronized void syncImmediately(Context context, DelayedWarning loadWarning) {
+    public static synchronized void syncImmediately(Context context) {
 
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

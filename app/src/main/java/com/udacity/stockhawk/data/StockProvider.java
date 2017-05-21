@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.text.MessageFormat;
+
 
 public class StockProvider extends ContentProvider {
 
@@ -67,11 +69,11 @@ public class StockProvider extends ContentProvider {
 
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw rejectURI(uri);
         }
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             returnCursor.setNotificationUri(context.getContentResolver(), uri);
         }
 
@@ -100,15 +102,21 @@ public class StockProvider extends ContentProvider {
                 returnUri = Contract.Quote.URI;
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw rejectURI(uri);
         }
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             context.getContentResolver().notifyChange(uri, null);
         }
 
         return returnUri;
+    }
+
+    @NonNull
+    private UnsupportedOperationException rejectURI(@NonNull Uri uri) {
+        //noinspection HardCodedStringLiteral
+        return new UnsupportedOperationException(MessageFormat.format("Unknown URI:{0}", uri));
     }
 
     @Override
@@ -139,12 +147,12 @@ public class StockProvider extends ContentProvider {
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw rejectURI(uri);
         }
 
         if (rowsDeleted != 0) {
             Context context = getContext();
-            if (context != null){
+            if (context != null) {
                 context.getContentResolver().notifyChange(uri, null);
             }
         }
