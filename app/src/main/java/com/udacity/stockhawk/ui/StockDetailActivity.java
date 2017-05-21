@@ -192,6 +192,8 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(Loader<List<HistoricalQuote>> loader, List<HistoricalQuote> data) {
         List<HistoricalQuote> reducedData = FormattingHelper.reducePoints(data, 200);
+        if (reducedData == null)
+            return;
         List<CandleEntry> candleEntries = new ArrayList<>(reducedData.size());
 
         for (HistoricalQuote historicalQuote : reducedData) {
