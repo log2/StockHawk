@@ -94,10 +94,12 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         }
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setDisplayShowTitleEnabled(true);
-        supportActionBar.setElevation(4);
-        supportActionBar.setTitle(MessageFormat.format(getString(R.string.detailChartActivityTitle), stock));
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            supportActionBar.setDisplayShowTitleEnabled(true);
+            supportActionBar.setElevation(4);
+            supportActionBar.setTitle(MessageFormat.format(getString(R.string.detailChartActivityTitle), stock));
+        }
         candleStickChart.setBackgroundColor(Color.WHITE);
 
         candleStickChart.setMaxVisibleValueCount(200);
@@ -178,7 +180,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(Loader<List<HistoricalQuote>> loader, List<HistoricalQuote> data) {
         List<HistoricalQuote> reducedData = FormattingHelper.reducePoints(data, 200);
-        List<CandleEntry> yVals1 = new ArrayList<CandleEntry>(reducedData.size());
+        List<CandleEntry> yVals1 = new ArrayList<>(reducedData.size());
 
         for (HistoricalQuote historicalQuote : reducedData) {
 

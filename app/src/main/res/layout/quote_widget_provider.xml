@@ -29,6 +29,6 @@
             android:id="@+id/widget_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listItem="@layout/widget_collection_item"></ListView>
+            tools:listItem="@layout/widget_collection_item" />
     </FrameLayout>
 </LinearLayout>

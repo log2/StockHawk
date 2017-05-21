@@ -4,9 +4,9 @@
     android:initialKeyguardLayout="@layout/quote_widget_provider"
     android:initialLayout="@layout/quote_widget_provider"
     android:minHeight="180dp"
-    android:minWidth="110dp"
+    android:minWidth="180dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"
-    tools:ignore="UnusedAttribute"></appwidget-provider>
+    tools:ignore="UnusedAttribute" />
