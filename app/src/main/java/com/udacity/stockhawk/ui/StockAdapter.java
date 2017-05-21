@@ -51,7 +51,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     public void onBindViewHolder(StockViewHolder holder, int position) {
         cursor.moveToPosition(position);
 
-        formattingHelper.setLine(cursor, holder.symbol, holder.price, holder.change, holder.sparkView);
+        formattingHelper.setLine(context, cursor, holder.itemView, holder.symbol, holder.price, holder.change, holder.sparkView);
     }
 
     @Override

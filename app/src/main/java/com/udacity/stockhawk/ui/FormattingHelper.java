@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class FormattingHelper {
     private final DecimalFormat dollarFormatWithPlus;
     private final DecimalFormat dollarFormat;
     private final DecimalFormat percentageFormat;
+    private final DecimalFormat percentageFormatWithPlus;
     private final DisplayModeSupplier displayModeSupplier;
 
     private final DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT);
@@ -43,10 +45,13 @@ public class FormattingHelper {
         dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
         dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
         dollarFormatWithPlus.setPositivePrefix("+$");
+        percentageFormatWithPlus = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
+        percentageFormatWithPlus.setMaximumFractionDigits(2);
+        percentageFormatWithPlus.setMinimumFractionDigits(2);
+        percentageFormatWithPlus.setPositivePrefix("+");
         percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
         percentageFormat.setMaximumFractionDigits(2);
         percentageFormat.setMinimumFractionDigits(2);
-        percentageFormat.setPositivePrefix("+");
     }
 
     public FormattingHelper(final Context context) {
@@ -72,15 +77,15 @@ public class FormattingHelper {
         return reducedSize;
     }
 
-    public void setLine(final Cursor cursor, final TextView tvSymbol, final TextView tvPrice, final TextView tvChange, final SparkView sparkView) {
-        new PrettyPrinter() {
+    public void setLine(Context context, final Cursor cursor, final View itemView, final TextView tvSymbol, final TextView tvPrice, final TextView tvChange, final SparkView sparkView) {
+        new PrettyPrinter(context) {
             @Override
-            void display(String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
+            void display(String contentDescription, String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
                 tvSymbol.setText(symbol);
                 tvPrice.setText(price);
                 tvChange.setBackgroundResource(backgroundResource);
                 tvChange.setText(change);
-
+                itemView.setContentDescription(contentDescription);
                 sparkView.setAdapter(new MyAdapter(reducePoints(historicalQuotes), getPrice(cursor)));
             }
         }.go(cursor);
@@ -90,10 +95,10 @@ public class FormattingHelper {
         return reducePoints(historicalQuotes, 30);
     }
 
-    public void setLine(final Cursor cursor, final RemoteViews views, @SuppressWarnings("SameParameterValue") @IdRes final int symbolId, @SuppressWarnings("SameParameterValue") @IdRes final int priceId, @SuppressWarnings("SameParameterValue") @IdRes final int changeId) {
-        new PrettyPrinter() {
+    public void setLine(Context context, final Cursor cursor, final RemoteViews views, @SuppressWarnings("SameParameterValue") @IdRes final int symbolId, @SuppressWarnings("SameParameterValue") @IdRes final int priceId, @SuppressWarnings("SameParameterValue") @IdRes final int changeId) {
+        new PrettyPrinter(context) {
             @Override
-            void display(String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
+            void display(String contentDescription, String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
                 views.setTextViewText(symbolId, symbol);
                 views.setTextViewText(priceId, price);
                 //noinspection HardCodedStringLiteral
@@ -110,7 +115,7 @@ public class FormattingHelper {
         int backgroundResource = rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red;
 
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
-        String percentage = percentageFormat.format(percentageChange / 100);
+        String percentage = percentageFormatWithPlus.format(percentageChange / 100);
         detailDate.setText(dateFormat.format(new Date((long) candleEntry.getX())));
         detailAbsoluteChange.setText(change);
         detailPercentageChange.setText(percentage);
@@ -167,11 +172,16 @@ public class FormattingHelper {
     }
 
     private abstract class PrettyPrinter {
+        private final Context context;
+
+        PrettyPrinter(Context context) {
+            this.context = context;
+        }
         /**
          * Will code for a tuple, but any product class is appreciated.
          * Sir, would you mind sparing a tuple for a poor Scala traveller stranded in this pre-lambda world?
          */
-        abstract void display(String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes);
+        abstract void display(String contentDescription, String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes);
 
         void go(Cursor cursor) {
             String symbol = cursor.getString(Contract.Quote.POSITION_SYMBOL);
@@ -183,12 +193,22 @@ public class FormattingHelper {
             int backgroundResource = rawAbsoluteChange > 0 ? R.drawable.percent_change_pill_green : R.drawable.percent_change_pill_red;
 
             String change = dollarFormatWithPlus.format(rawAbsoluteChange);
-            String percentage = percentageFormat.format(percentageChange / 100);
+            String percentage = percentageFormatWithPlus.format(percentageChange / 100);
             String changeText = displayModeSupplier.isDisplayModeAbsolute() ? change : percentage;
             String historicalData = cursor.getString(Contract.Quote.POSITION_HISTORY);
             List<HistoricalQuote> historicalQuotes = QuoteSyncJob.parseHistoricalData(historicalData);
 
-            display(symbol, price, backgroundResource, changeText, historicalQuotes);
+            String contentDescription = String.format(context.getString(R.string.stockContentDescription), symbol, price, describeChange(rawAbsoluteChange, percentageChange));
+            display(contentDescription, symbol, price, backgroundResource, changeText, historicalQuotes);
+        }
+
+        @NonNull
+        private String describeChange(float rawAbsoluteChange, float percentageChange) {
+            if (rawAbsoluteChange >= 0) {
+                return String.format(context.getString(R.string.stockSymbolSoaredDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(rawAbsoluteChange) : percentageFormat.format(percentageChange / 100));
+            } else {
+                return String.format(context.getString(R.string.stockSymbolDecreasedDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(-rawAbsoluteChange) : percentageFormat.format(-percentageChange / 100));
+            }
         }
 
         float getPrice(Cursor cursor) {

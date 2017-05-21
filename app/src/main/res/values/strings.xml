@@ -26,7 +26,7 @@
     <string name="action_change_units" translatable="false">@string/pref_display_mode_key</string>
 
     <string name="dialog_title">Add Stock</string>
-    <string name="dialog_hint">Symbol (e.g. GOOG)</string>
+    <string name="dialog_hint">Symbol (capital letters, e.g., GOOG)</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_add">Add</string>
 
@@ -58,4 +58,7 @@
     <string name="stockSymbolAddedAgain">Stock <xliff:g example="GOOG">{0}</xliff:g> is tracked again as required</string>
     <string name="undoRemoval">UNDO</string>
     <string name="unknownStockSymbol">Unknown stock symbol <xliff:g example="GOOG">{0}</xliff:g></string>
+    <string name="stockContentDescription">Stock symbol <xliff:g example="GOOG">%s</xliff:g> current value is <xliff:g example="45.34$">%s</xliff:g>: <xliff:g example="it has soared by 3.45%">%s</xliff:g></string>
+    <string name="stockSymbolSoaredDescription">it has soared by <xliff:g example="3.45%">%s</xliff:g></string>
+    <string name="stockSymbolDecreasedDescription">it has decreased by <xliff:g example="3.45%">%s</xliff:g></string>
 </resources>
