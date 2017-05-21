@@ -39,7 +39,7 @@
     <string name="exampleQuoteSymbol">GOOG</string>
     <string name="exampleQuoteValue">1000.00</string>
     <string name="exampleQuotePercentage">100%</string>
-    <string name="widgetTitle">Today stock</string>
+    <string name="widgetTitle">Stock Hawk - at a glance</string>
     <string name="title_activity_stock_detail">Stock history</string>
     <string name="examplePercentageChange">5.56%</string>
     <string name="exampleAbsoluteChange">+50$</string>
