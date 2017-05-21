@@ -21,7 +21,7 @@
         tools:text="@string/exampleQuoteSymbol" />
 
     <LinearLayout
-        android:layout_width="@dimen/emptySizeForGravityDrivenDimension"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="end">
@@ -32,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/priceMarginEnd"
-            android:layout_marginRight="@dimen/priceMarginEnd"
             tools:text="@string/exampleQuoteValue" />
 
         <TextView

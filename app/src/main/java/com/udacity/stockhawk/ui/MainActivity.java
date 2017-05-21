@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 int deleted = getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
                 if (deleted > 0) {
                     broadcastUpdate();
-                    Snackbar.make(stockRecyclerView, MessageFormat.format(getString(R.string.stockStymbolDeleted), symbol), Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+                    Snackbar.make(stockRecyclerView, MessageFormat.format(getString(R.string.stockStymbolDeleted), symbol), Snackbar.LENGTH_LONG).setAction(R.string.undoRemoval, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             addStockAndSync(symbol);

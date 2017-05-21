@@ -8,13 +8,13 @@ import com.google.common.collect.ImmutableList;
 
 public final class Contract {
 
-    @SuppressWarnings("HardCodedStringLiteral")
+    @SuppressWarnings({"HardCodedStringLiteral", "DuplicateStringLiteralInspection"})
     static final String AUTHORITY = "com.udacity.stockhawk";
     @SuppressWarnings("HardCodedStringLiteral")
     static final String PATH_QUOTE = "quote";
     @SuppressWarnings("HardCodedStringLiteral")
     static final String PATH_QUOTE_WITH_SYMBOL = "quote/*";
-    @SuppressWarnings("HardCodedStringLiteral")
+    @SuppressWarnings({"HardCodedStringLiteral", "StringConcatenation"})
     private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
     private Contract() {

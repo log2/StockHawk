@@ -10,6 +10,7 @@ import com.udacity.stockhawk.data.Contract.Quote;
 class DbHelper extends SQLiteOpenHelper {
 
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String NAME = "StockHawk.db";
     private static final int VERSION = 1;
 
@@ -37,6 +38,7 @@ class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        //noinspection StringConcatenation
         db.execSQL(" DROP TABLE IF EXISTS " + Quote.TABLE_NAME);
 
         onCreate(db);

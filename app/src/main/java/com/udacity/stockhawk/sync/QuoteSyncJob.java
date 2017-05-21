@@ -97,7 +97,7 @@ public final class QuoteSyncJob {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            // FIXME can we switch to snackbar with action?
+                            // FIXME can we switch to snackbar with action? But where can we find a view?
                             Toast.makeText(context, "Unknown stock symbol " + symbol, Toast.LENGTH_LONG).show();
                         }
                     });

@@ -155,7 +155,7 @@ public class MockUtils {
         String[] data = line.split(",");
 
         BigDecimal factor = new BigDecimal(noise(random) * scale);
-        return new HistoricalQuote("STOCK NAME",
+        return new HistoricalQuote("" /* DUMMY STOCK NAME */,
                 parseHistDate(data[0]),
                 Utils.getBigDecimal(data[1]).multiply(factor),
                 Utils.getBigDecimal(data[3]).multiply(factor),
@@ -180,13 +180,16 @@ public class MockUtils {
                 return c;
             }
         } catch (ParseException ex) {
+            //noinspection DuplicateStringLiteralInspection
             Timber.w("Failed to parse hist date: " + date);
+            //noinspection DuplicateStringLiteralInspection
             Timber.v("Failed to parse hist date: " + date, ex);
         }
         return null;
     }
 
     private static boolean isParseable(String data) {
+        //noinspection HardCodedStringLiteral
         return !(data == null || data.equals("N/A") || data.equals("-")
                 || data.equals("") || data.equals("nan"));
     }

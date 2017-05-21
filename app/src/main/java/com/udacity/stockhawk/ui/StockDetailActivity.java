@@ -43,6 +43,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 public class StockDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<HistoricalQuote>> {
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final String STOCK_KEY = "stock";
     private static final int DATA_LOADER = 42;
     @BindView(R.id.chart)
@@ -163,8 +164,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
                     if (cursor != null && cursor.getCount() == 1) {
                         cursor.moveToFirst();
                         String historicalData = cursor.getString(Contract.Quote.POSITION_HISTORY);
-                        List<HistoricalQuote> historicalQuotes = QuoteSyncJob.parseHistoricalData(historicalData);
-                        return historicalQuotes;
+                        return QuoteSyncJob.parseHistoricalData(historicalData);
                     }
                     return null;
                 } finally {
