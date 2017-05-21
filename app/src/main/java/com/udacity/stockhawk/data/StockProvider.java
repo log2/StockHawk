@@ -139,7 +139,7 @@ public class StockProvider extends ContentProvider {
 
             case QUOTE_FOR_SYMBOL:
                 String symbol = Contract.Quote.getStockFromUri(uri);
-                //noinspection StringConcatenation,StringConcatenation,StringConcatenation
+                //noinspection StringConcatenation,StringConcatenation,StringConcatenation,MagicCharacter,MagicCharacter
                 rowsDeleted = db.delete(
                         Contract.Quote.TABLE_NAME,
                         '"' + symbol + '"' + " =" + Contract.Quote.COLUMN_SYMBOL,

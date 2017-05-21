@@ -173,6 +173,7 @@ public class MockUtils {
 
     private static Calendar parseHistDate(String date) {
         // FIXED l10n not an issue, we parse a date from a prebuilt constant
+        //noinspection HardCodedStringLiteral
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         try {
             if (isParseable(date)) {
