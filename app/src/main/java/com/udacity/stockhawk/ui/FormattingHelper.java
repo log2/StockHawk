@@ -102,7 +102,7 @@ public class FormattingHelper {
         }.go(cursor);
     }
 
-    public String format(String symbol, CandleEntry candleEntry) {
+    public void format(String symbol, CandleEntry candleEntry, TextView detailDate, TextView detailLow, TextView detailHigh, TextView detailOpen, TextView detailClose, TextView detailAbsoluteChange, TextView detailPercentageChange) {
         String price = dollarFormat.format(candleEntry.getClose());
 
         float rawAbsoluteChange = candleEntry.getClose() - candleEntry.getOpen();
@@ -112,10 +112,15 @@ public class FormattingHelper {
 
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
         String percentage = percentageFormat.format(percentageChange / 100);
-        String changeText = displayModeSupplier.isDisplayModeAbsolute() ? change : percentage;
-        return symbol + " " + dateFormat.format(new Date((long) candleEntry.getX())) + " " + price + " " + changeText + "\n" +
-                "Low-High: " + dollarFormat.format(candleEntry.getLow()) + " - " + dollarFormat.format(candleEntry.getHigh()) + "\n" +
-                "Open->Close: " + dollarFormat.format(candleEntry.getOpen()) + " -> " + dollarFormat.format(candleEntry.getClose());
+        detailDate.setText(dateFormat.format(new Date((long) candleEntry.getX())));
+        detailAbsoluteChange.setText(change);
+        detailPercentageChange.setText(percentage);
+        detailAbsoluteChange.setBackgroundResource(backgroundResource);
+        detailPercentageChange.setBackgroundResource(backgroundResource);
+        detailLow.setText(dollarFormat.format(candleEntry.getLow()));
+        detailHigh.setText(dollarFormat.format(candleEntry.getHigh()));
+        detailOpen.setText(dollarFormat.format(candleEntry.getOpen()));
+        detailClose.setText(dollarFormat.format(candleEntry.getClose()));
     }
 
     public interface DisplayModeSupplier {

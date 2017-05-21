@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--
         FIXME Ensure l10n works properly, ensure rtl is enabled (also start/end instead of left/right)
         Your boss says:
@@ -44,4 +44,18 @@
     <string name="exampleQuotePercentage">100%</string>
     <string name="widgetTitle">Today stock</string>
     <string name="title_activity_stock_detail">Stock history</string>
+    <string name="examplePercentageChange">5.56%</string>
+    <string name="exampleAbsoluteChange">+50$</string>
+    <string name="exampleCloseValue">950$</string>
+    <string name="exampleOpenValue">900$</string>
+    <string name="detailChangeText">Change</string>
+    <string name="detailOpenCloseText"><![CDATA[Open->Close]]></string>
+    <string name="exampleHighValue">1200$</string>
+    <string name="exampleLowValue">800$</string>
+    <string name="detailLowHighText">Low-High</string>
+    <string name="exampleDate">2017-05-21</string>
+    <string name="detailDateText">Date</string>
+    <string name="detailPlaceHolderText">Select a point to show stock data</string>
+    <string name="exampleDateRange"><![CDATA[2015-01-07 -> 2017-05-21]]></string>
+    <string name="detailChartActivityTitle">History of <xliff:g>{0}</xliff:g></string>
 </resources>

@@ -15,4 +15,18 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="changeHorizontalMargin">3dp</dimen>
     <dimen name="priceMarginEnd">10sp</dimen>
     <dimen name="emptySizeForGravityDrivenDimension">0dp</dimen>
+    <dimen name="chart_vertical_padding">16dp</dimen>
+    <dimen name="chart_horizontal_padding">16dp</dimen>
+    <dimen name="detail_vertical_margin">8dp</dimen>
+    <dimen name="detail_horizontal_margin">0dp</dimen>
+    <dimen name="detail_vertical_padding">16dp</dimen>
+    <dimen name="detail_horizontal_padding">16dp</dimen>
+    <dimen name="chartElevation">8dp</dimen>
+    <dimen name="chartDetailElevation">8dp</dimen>
+    <dimen name="detail_component_vertical_margin">0dp</dimen>
+    <dimen name="detail_component_horizontal_margin">0dp</dimen>
+    <dimen name="detail_component_vertical_padding">4dp</dimen>
+    <dimen name="detail_component_horizontal_padding">4dp</dimen>
+    <dimen name="detail_bottom_margin">4dp</dimen>
+    <dimen name="detail_top_margin">8dp</dimen>
 </resources>

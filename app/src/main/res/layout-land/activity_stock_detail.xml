@@ -20,13 +20,13 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <com.github.mikephil.charting.charts.CandleStickChart
             android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
             android:layout_weight="1"
             android:elevation="@dimen/chartElevation"
             android:paddingBottom="@dimen/chart_vertical_padding"
@@ -34,7 +34,11 @@
             android:paddingStart="@dimen/chart_horizontal_padding"
             android:paddingTop="@dimen/chart_vertical_padding" />
 
-        <include layout="@layout/detail_card" />
+        <include
+            layout="@layout/detail_card"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.001" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

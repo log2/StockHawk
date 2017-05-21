@@ -10,8 +10,9 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CandleStickChart;
@@ -32,6 +33,7 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,10 +51,27 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     private static final int DATA_LOADER = 42;
     @BindView(R.id.chart)
     CandleStickChart candleStickChart;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.chart_detail)
+    GridLayout chartDetail;
+
     @BindView(R.id.tv_highlighted_description)
     TextView tvHighlightedDescription;
+
+    @BindView(R.id.detail_date)
+    TextView detailDate;
+    @BindView(R.id.detail_low)
+    TextView detailLow;
+    @BindView(R.id.detail_high)
+    TextView detailHigh;
+    @BindView(R.id.detail_open)
+    TextView detailOpen;
+    @BindView(R.id.detail_close)
+    TextView detailClose;
+    @BindView(R.id.detail_absolute_change)
+    TextView detailAbsoluteChange;
+    @BindView(R.id.detail_percentage_change)
+    TextView detailPercentageChange;
+
     private String stock;
     private FormattingHelper formattingHelper;
 
@@ -83,7 +102,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         supportActionBar.setDisplayHomeAsUpEnabled(true);
         supportActionBar.setDisplayShowTitleEnabled(true);
         supportActionBar.setElevation(4);
-        supportActionBar.setTitle(stock);
+        supportActionBar.setTitle(MessageFormat.format(getString(R.string.detailChartActivityTitle), stock));
         candleStickChart.setBackgroundColor(Color.WHITE);
 
         candleStickChart.setMaxVisibleValueCount(200);
@@ -162,14 +181,20 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 CandleEntry candleEntry = (CandleEntry) e;
-                tvHighlightedDescription.setText(formattingHelper.format(stock, candleEntry));
+                formattingHelper.format(stock, candleEntry, detailDate, detailLow, detailHigh, detailOpen, detailClose, detailAbsoluteChange, detailPercentageChange);
+
+                tvHighlightedDescription.setVisibility(View.INVISIBLE);
+                chartDetail.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onNothingSelected() {
-                tvHighlightedDescription.setText("Select a point to show stock data");
+                tvHighlightedDescription.setVisibility(View.VISIBLE);
+                chartDetail.setVisibility(View.INVISIBLE);
             }
         });
+        tvHighlightedDescription.setVisibility(View.VISIBLE);
+        chartDetail.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -219,9 +244,8 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
                     timeInMillis, high,
                     low, open,
                     close,
-                    null // getResources().getDrawable(android.R.drawable.star_big_on)
+                    null
             );
-            //Timber.v(low + " " + open + " - " + close + " - " + high);
             yVals1.add(candleEntry);
         }
 
@@ -232,25 +256,9 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             }
         });
         CandleDataSet set1 = new CandleDataSet(yVals1, stock);
-//        set1.setDecreasingColor(Color.RED);
-//        set1.setDecreasingPaintStyle(Paint.Style.FILL);
-//        set1.setIncreasingColor(Color.GREEN);
-//        set1.setIncreasingPaintStyle(Paint.Style.FILL);
-//        set1.setBarSpace(12);
-//        set1.setShadowColorSameAsCandle(false);
-//        set1.setShadowWidth(12);
-//        set1.setShowCandleBar(true);
-//        set1.setDrawVerticalHighlightIndicator(true);
-//        set1.setNeutralColor(Color.GRAY);
-//        set1.setShadowColor(Color.YELLOW);
-//        set1.setValueTextSize(16);
-//        set1.setDrawValues(true);
-//        set1.setDrawHorizontalHighlightIndicator(true);
-//        set1.setHighlightLineWidth(1);
         set1.setDrawValues(false);
         set1.setDrawIcons(false);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-//        set1.setColor(Color.rgb(80, 80, 80));
         set1.setShadowColor(Color.LTGRAY);
         set1.setShadowWidth(3f);
         set1.setBarSpace(0f);
