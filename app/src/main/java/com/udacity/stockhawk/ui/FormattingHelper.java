@@ -32,7 +32,7 @@ import yahoofinance.histquotes.HistoricalQuote;
  * Created by gallucci on 20/05/2017.
  */
 
-public class FormattingHelper {
+public final class FormattingHelper {
     private final DecimalFormat dollarFormatWithPlus;
     private final DecimalFormat dollarFormat;
     private final DecimalFormat percentageFormat;
