@@ -26,6 +26,8 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.text.MessageFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -97,13 +99,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
-                PrefUtils.removeStock(MainActivity.this, symbol);
-                getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                final String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
+                final MainActivity context = MainActivity.this;
+                PrefUtils.removeStock(context, symbol);
+                int deleted = getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                if (deleted > 0) {
+                    broadcastUpdate();
+                    Snackbar.make(stockRecyclerView, MessageFormat.format(getString(R.string.stockStymbolDeleted), symbol), Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addStockAndSync(symbol);
+                            Snackbar.make(stockRecyclerView, MessageFormat.format(getString(R.string.stockSymbolAddedAgain), symbol), Snackbar.LENGTH_LONG).show();
+                        }
+                    }).show();
+                } else
+                    Snackbar.make(stockRecyclerView, R.string.deletionFailed, Snackbar.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(stockRecyclerView);
+    }
 
-
+    private void broadcastUpdate() {
+        Intent updateDataIntent = new Intent(QuoteSyncJob.ACTION_DATA_UPDATED);
+        sendBroadcast(updateDataIntent);
     }
 
     private DelayedWarning prepareLoadWarning() {
@@ -176,9 +193,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
 
-            PrefUtils.addStock(this, symbol);
-            doSyncImmediately();
+            addStockAndSync(symbol);
         }
+    }
+
+    private void addStockAndSync(String symbol) {
+        PrefUtils.addStock(this, symbol);
+        doSyncImmediately();
     }
 
     @Override

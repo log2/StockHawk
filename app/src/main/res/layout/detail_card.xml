@@ -17,24 +17,6 @@
     android:paddingTop="@dimen/detail_vertical_padding"
     tools:showIn="@layout/activity_stock_detail">
 
-    <TextView
-        android:id="@+id/tv_highlighted_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginBottom="@dimen/detail_component_vertical_margin"
-        android:layout_marginEnd="@dimen/detail_component_horizontal_margin"
-        android:layout_marginStart="@dimen/detail_component_horizontal_margin"
-        android:layout_marginTop="@dimen/detail_component_vertical_margin"
-        android:layout_weight="0.04"
-        android:paddingBottom="@dimen/detail_component_vertical_padding"
-        android:paddingEnd="@dimen/detail_component_horizontal_padding"
-        android:paddingStart="@dimen/detail_component_horizontal_padding"
-        android:paddingTop="@dimen/detail_component_vertical_padding"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="invisible"
-        tools:text="@string/detailPlaceHolderText" />
-
     <GridLayout
         android:id="@+id/chart_detail"
         android:layout_width="match_parent"

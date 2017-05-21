@@ -10,7 +10,6 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -25,8 +24,6 @@ import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
@@ -117,7 +114,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
                 return dateFormat.format(new Date((long) value));
             }
         });
-        xAxis.setLabelRotationAngle(45f);
+        xAxis.setLabelRotationAngle(-45f);
 //        xAxis.setGranularityEnabled(true);
 //        xAxis.setGranularity(TimeUnit.DAYS.toMillis(14));
         xAxis.setTextSize(14);
@@ -136,54 +133,13 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         rightAxis.setEnabled(false);
 
         formattingHelper = new FormattingHelper(this);
-        candleStickChart.setOnChartGestureListener(new OnChartGestureListener() {
-            @Override
-            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-            }
-
-            @Override
-            public void onChartLongPressed(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartDoubleTapped(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartSingleTapped(MotionEvent me) {
-
-            }
-
-            @Override
-            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-            }
-
-            @Override
-            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-
-            }
-
-            @Override
-            public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-            }
-        });
         candleStickChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 CandleEntry candleEntry = (CandleEntry) e;
                 formattingHelper.format(stock, candleEntry, detailDate, detailLow, detailHigh, detailOpen, detailClose, detailAbsoluteChange, detailPercentageChange);
 
-                tvHighlightedDescription.setVisibility(View.INVISIBLE);
+                tvHighlightedDescription.setVisibility(View.GONE);
                 chartDetail.setVisibility(View.VISIBLE);
             }
 
@@ -195,6 +151,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
         });
         tvHighlightedDescription.setVisibility(View.VISIBLE);
         chartDetail.setVisibility(View.INVISIBLE);
+        candleStickChart.getLegend().setEnabled(false);
     }
 
     @Override
