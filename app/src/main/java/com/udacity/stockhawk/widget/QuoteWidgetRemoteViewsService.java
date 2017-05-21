@@ -47,7 +47,7 @@ public class QuoteWidgetRemoteViewsService extends RemoteViewsService {
             public void onDataSetChanged() {
                 closeCursorIfAny();
                 try (AppIdentity appIdentity = AppIdentity.with()) {
-                    data = getContentResolver().query(Contract.Quote.URI, new String[]{}, null, null, null);
+                    data = getContentResolver().query(Contract.Quote.URI, new String[]{}, null, null, Contract.Quote.COLUMN_SYMBOL);
                 }
             }
 
