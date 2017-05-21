@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // FIXME here we get 300 ms of delay, due to initial layout inflating
-        // How to overcome this???
+        //  here we get 300 ms of delay, due to initial layout inflating
+        // Can we do better??
         Timber.d("One");
         setContentView(R.layout.activity_main);
         Timber.d("One and a half");
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onRefresh() {
 
-        // FIXME add micro-message to compensate for unusual delays during network synchronization
+        // TODO perhaps we could add a small message to compensate for unusual delays during network synchronization?
 //        Xaio-lu says:
 //        "When I opened this app for the first time without a network connection, it was a confusing blank screen. I would love a message that tells me why the screen is blank or whether my stock quotes are out of date."
 

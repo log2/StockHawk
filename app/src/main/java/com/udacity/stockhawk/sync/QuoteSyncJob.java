@@ -72,7 +72,7 @@ public final class QuoteSyncJob {
             }
 
 
-            // FIXME add fix for missing network
+            // FIXED missing network does not induce strange states, apparently
 //            Xaio-lu says:
 //            "When I opened this app for the first time without a network connection, it was a confusing blank screen. I would love a message that tells me why the screen is blank or whether my stock quotes are out of date."
             Map<String, Stock> quotes = YahooFinance.get(stockArray);
