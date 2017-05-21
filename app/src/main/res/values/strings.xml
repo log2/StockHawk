@@ -1,6 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--
-        FIXME Ensure l10n works properly, ensure rtl is enabled (also start/end instead of left/right)
+        FIXED Ensure l10n works properly, ensure rtl is enabled (also start/end instead of left/right)
         Your boss says:
 "We need to prepare Stock Hawk for the Egypt release. Make sure our translators know what to change and make sure the Arabic script will format nicely."
 

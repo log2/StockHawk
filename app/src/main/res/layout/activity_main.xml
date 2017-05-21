@@ -22,11 +22,7 @@ FIXME add content description
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin" />
-        <!-- FIXME remove left/right, leave only start/end -->
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
