@@ -108,7 +108,7 @@ public class FormattingHelper {
         }.go(cursor);
     }
 
-    public void format(@SuppressWarnings("UnusedParameters") String symbol, CandleEntry candleEntry, TextView detailDate, TextView detailLow, TextView detailHigh, TextView detailOpen, TextView detailClose, TextView detailAbsoluteChange, TextView detailPercentageChange) {
+    public String format(Context context, String symbol, CandleEntry candleEntry, TextView detailDate, TextView detailLow, TextView detailHigh, TextView detailOpen, TextView detailClose, TextView detailAbsoluteChange, TextView detailPercentageChange) {
         float rawAbsoluteChange = candleEntry.getClose() - candleEntry.getOpen();
         float percentageChange = 100 * (rawAbsoluteChange / candleEntry.getOpen());
 
@@ -116,15 +116,31 @@ public class FormattingHelper {
 
         String change = dollarFormatWithPlus.format(rawAbsoluteChange);
         String percentage = percentageFormatWithPlus.format(percentageChange / 100);
-        detailDate.setText(dateFormat.format(new Date((long) candleEntry.getX())));
+        String date = dateFormat.format(new Date((long) candleEntry.getX()));
+        detailDate.setText(date);
         detailAbsoluteChange.setText(change);
         detailPercentageChange.setText(percentage);
         detailAbsoluteChange.setBackgroundResource(backgroundResource);
         detailPercentageChange.setBackgroundResource(backgroundResource);
-        detailLow.setText(dollarFormat.format(candleEntry.getLow()));
-        detailHigh.setText(dollarFormat.format(candleEntry.getHigh()));
-        detailOpen.setText(dollarFormat.format(candleEntry.getOpen()));
-        detailClose.setText(dollarFormat.format(candleEntry.getClose()));
+        String low = dollarFormat.format(candleEntry.getLow());
+        detailLow.setText(low);
+        String high = dollarFormat.format(candleEntry.getHigh());
+        detailHigh.setText(high);
+        String open = dollarFormat.format(candleEntry.getOpen());
+        detailOpen.setText(open);
+        String close = dollarFormat.format(candleEntry.getClose());
+        detailClose.setText(close);
+
+        return String.format(context.getString(R.string.detailedStockContentDescription), date, symbol, low, high, open, close, describeChange(context, rawAbsoluteChange, percentageChange));
+    }
+
+    @NonNull
+    private String describeChange(Context context, float rawAbsoluteChange, float percentageChange) {
+        if (rawAbsoluteChange >= 0) {
+            return String.format(context.getString(R.string.stockSymbolSoaredDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(rawAbsoluteChange) : percentageFormat.format(percentageChange / 100));
+        } else {
+            return String.format(context.getString(R.string.stockSymbolDecreasedDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(-rawAbsoluteChange) : percentageFormat.format(-percentageChange / 100));
+        }
     }
 
     public interface DisplayModeSupplier {
@@ -177,6 +193,7 @@ public class FormattingHelper {
         PrettyPrinter(Context context) {
             this.context = context;
         }
+
         /**
          * Will code for a tuple, but any product class is appreciated.
          * Sir, would you mind sparing a tuple for a poor Scala traveller stranded in this pre-lambda world?
@@ -198,18 +215,10 @@ public class FormattingHelper {
             String historicalData = cursor.getString(Contract.Quote.POSITION_HISTORY);
             List<HistoricalQuote> historicalQuotes = QuoteSyncJob.parseHistoricalData(historicalData);
 
-            String contentDescription = String.format(context.getString(R.string.stockContentDescription), symbol, price, describeChange(rawAbsoluteChange, percentageChange));
+            String contentDescription = String.format(context.getString(R.string.stockContentDescription), symbol, price, describeChange(context, rawAbsoluteChange, percentageChange));
             display(contentDescription, symbol, price, backgroundResource, changeText, historicalQuotes);
         }
 
-        @NonNull
-        private String describeChange(float rawAbsoluteChange, float percentageChange) {
-            if (rawAbsoluteChange >= 0) {
-                return String.format(context.getString(R.string.stockSymbolSoaredDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(rawAbsoluteChange) : percentageFormat.format(percentageChange / 100));
-            } else {
-                return String.format(context.getString(R.string.stockSymbolDecreasedDescription), displayModeSupplier.isDisplayModeAbsolute() ? dollarFormat.format(-rawAbsoluteChange) : percentageFormat.format(-percentageChange / 100));
-            }
-        }
 
         float getPrice(Cursor cursor) {
             return cursor.getFloat(Contract.Quote.POSITION_PRICE);

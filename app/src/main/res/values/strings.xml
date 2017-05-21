@@ -23,8 +23,9 @@
     <string name="default_stocks_microsoft" translatable="false">MSFT</string>
     <string name="default_stocks_facebook" translatable="false">FB</string>
 
-    <string name="action_change_units" translatable="false">@string/pref_display_mode_key</string>
-
+    <string name="action_change_units">Switch between absolute value and percentage</string>
+    <string name="action_change_to_percentage">Show change percentages (rather than absolute values)</string>
+    <string name="action_change_to_absolute_value">Show absolute change values (rather than percentages)</string>
     <string name="dialog_title">Add Stock</string>
     <string name="dialog_hint">Symbol (capital letters, e.g., GOOG)</string>
     <string name="dialog_cancel">Cancel</string>
@@ -58,7 +59,11 @@
     <string name="stockSymbolAddedAgain">Stock <xliff:g example="GOOG">{0}</xliff:g> is tracked again as required</string>
     <string name="undoRemoval">UNDO</string>
     <string name="unknownStockSymbol">Unknown stock symbol <xliff:g example="GOOG">{0}</xliff:g></string>
-    <string name="stockContentDescription">Stock symbol <xliff:g example="GOOG">%s</xliff:g> current value is <xliff:g example="45.34$">%s</xliff:g>: <xliff:g example="it has soared by 3.45%">%s</xliff:g></string>
+    <string name="stockContentDescription">Stock symbol <xliff:g example="GOOG">%s</xliff:g> current value is <xliff:g example="45.34$">%s</xliff:g>: therefore <xliff:g example="it has soared by 3.45%">%s</xliff:g></string>
     <string name="stockSymbolSoaredDescription">it has soared by <xliff:g example="3.45%">%s</xliff:g></string>
     <string name="stockSymbolDecreasedDescription">it has decreased by <xliff:g example="3.45%">%s</xliff:g></string>
+    <string name="add_another_stock_symbol_to_track">Add another stock symbol to track</string>
+    <string name="exampleErrorMessage">Error message</string>
+    <string name="detailedStockContentDescription">On <xliff:g example="19/05/2017">%s</xliff:g>, stock symbol <xliff:g example="GOOG">%s</xliff:g> floated between a low of <xliff:g example="800$">%s</xliff:g> and a high of <xliff:g example="1200$">%s</xliff:g>, opening with value <xliff:g example="900$">%s</xliff:g>, and closing with value <xliff:g example="950$">%s</xliff:g>. Thus, <xliff:g example="it has soared by 3.45%">%s</xliff:g></string>
+    <string name="detailToMainButtonContentDescription">Return to list of tracked stock symbols</string>
 </resources>

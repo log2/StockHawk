@@ -232,8 +232,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void setDisplayModeMenuItemIcon(MenuItem item) {
         if (PrefUtils.getDisplayMode(this)
                 .equals(getString(R.string.pref_display_mode_absolute_key))) {
+            item.setTitle(R.string.action_change_to_percentage);
             item.setIcon(R.drawable.ic_percentage);
         } else {
+            item.setTitle(R.string.action_change_to_absolute_value);
             item.setIcon(R.drawable.ic_dollar);
         }
     }

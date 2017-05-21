@@ -106,7 +106,9 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setDisplayShowTitleEnabled(true);
             supportActionBar.setElevation(4);
-            supportActionBar.setTitle(MessageFormat.format(getString(R.string.detailChartActivityTitle), stock));
+            String title = MessageFormat.format(getString(R.string.detailChartActivityTitle), stock);
+            supportActionBar.setTitle(title);
+            supportActionBar.setHomeActionContentDescription(R.string.detailToMainButtonContentDescription);
         }
         candleStickChart.setBackgroundColor(Color.WHITE);
 
@@ -146,7 +148,8 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 CandleEntry candleEntry = (CandleEntry) e;
-                formattingHelper.format(stock, candleEntry, detailDate, detailLow, detailHigh, detailOpen, detailClose, detailAbsoluteChange, detailPercentageChange);
+                String contentDescription = formattingHelper.format(getApplicationContext(), stock, candleEntry, detailDate, detailLow, detailHigh, detailOpen, detailClose, detailAbsoluteChange, detailPercentageChange);
+                chartDetail.setContentDescription(contentDescription);
             }
 
             @Override

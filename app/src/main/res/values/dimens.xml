@@ -27,4 +27,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="detail_component_horizontal_padding">4dp</dimen>
     <dimen name="detail_bottom_margin">4dp</dimen>
     <dimen name="detail_top_margin">8dp</dimen>
+    <dimen name="fabElevation">6dp</dimen>
+    <dimen name="fabTranslationZ">12dp</dimen>
 </resources>
