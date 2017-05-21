@@ -189,7 +189,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(Loader<List<HistoricalQuote>> loader, List<HistoricalQuote> data) {
         List<HistoricalQuote> reducedData = FormattingHelper.reducePoints(data, 200);
-        List<CandleEntry> yVals1 = new ArrayList<>(reducedData.size());
+        List<CandleEntry> candleEntries = new ArrayList<>(reducedData.size());
 
         for (HistoricalQuote historicalQuote : reducedData) {
 
@@ -204,16 +204,16 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
                     close,
                     null
             );
-            yVals1.add(candleEntry);
+            candleEntries.add(candleEntry);
         }
 
-        Collections.sort(yVals1, new Comparator<CandleEntry>() {
+        Collections.sort(candleEntries, new Comparator<CandleEntry>() {
             @Override
             public int compare(CandleEntry o1, CandleEntry o2) {
                 return Float.compare(o1.getX(), o2.getX());
             }
         });
-        CandleDataSet set1 = new CandleDataSet(yVals1, stock);
+        CandleDataSet set1 = new CandleDataSet(candleEntries, stock);
         set1.setDrawValues(false);
         set1.setDrawIcons(false);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -231,6 +231,7 @@ public class StockDetailActivity extends AppCompatActivity implements LoaderMana
 
         candleStickChart.setData(new CandleData(set1));
         candleStickChart.invalidate();
+        candleStickChart.highlightValue(candleEntries.get(candleEntries.size() - 1).getX(), 0);
     }
 
     @Override
