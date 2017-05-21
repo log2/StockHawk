@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.sync.QuoteSyncJob;
 import com.udacity.stockhawk.ui.MainActivity;
 import com.udacity.stockhawk.ui.StockDetailActivity;
 
@@ -78,17 +80,18 @@ public class QuoteWidgetProvider extends AppWidgetProvider {
         }
     }
 
-//    @Override
-//    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-//        super.onReceive(context, intent);
-//        if (SunshineSyncAdapter.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-//            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-//            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-//                    new ComponentName(context, getClass()));
-//            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
-//        }
-//    }
-//
+    @Override
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+        super.onReceive(context, intent);
+        String action = intent.getAction();
+        if (QuoteSyncJob.ACTION_DATA_UPDATED.equals(action)) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    new ComponentName(context, getClass()));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+        }
+    }
+
 
     @Override
     public void onEnabled(Context context) {
