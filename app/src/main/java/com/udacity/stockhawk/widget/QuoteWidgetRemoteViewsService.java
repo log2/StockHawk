@@ -76,7 +76,8 @@ public class QuoteWidgetRemoteViewsService extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(),
                         R.layout.widget_collection_item);
-                formattingHelper.setLine(getApplicationContext(), data, views, R.id.symbol, R.id.price, R.id.change);
+
+                formattingHelper.setLine(getApplicationContext(), data, views, R.id.widget_list_item, R.id.symbol, R.id.price, R.id.change);
 
                 final Intent fillInIntent = new Intent();
                 fillInIntent.putExtra(StockDetailActivity.STOCK_KEY, data.getString(Contract.Quote.POSITION_SYMBOL));

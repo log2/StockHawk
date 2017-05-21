@@ -66,7 +66,7 @@ public class FormattingHelper {
 
     @NonNull
     public static <T> List<T> reducePoints(@NonNull List<T> originalSeries, int maxSize) {
-        if (maxSize >= originalSeries.size())
+        if (originalSeries == null || maxSize >= originalSeries.size())
             return originalSeries;
         List<T> reducedSize = new ArrayList<>(maxSize);
         float mul = originalSeries.size() - 1;
@@ -95,7 +95,7 @@ public class FormattingHelper {
         return reducePoints(historicalQuotes, 30);
     }
 
-    public void setLine(Context context, final Cursor cursor, final RemoteViews views, @SuppressWarnings("SameParameterValue") @IdRes final int symbolId, @SuppressWarnings("SameParameterValue") @IdRes final int priceId, @SuppressWarnings("SameParameterValue") @IdRes final int changeId) {
+    public void setLine(Context context, final Cursor cursor, final RemoteViews views, @SuppressWarnings("SameParameterValue") @IdRes final int listItemId, @SuppressWarnings("SameParameterValue") @IdRes final int symbolId, @SuppressWarnings("SameParameterValue") @IdRes final int priceId, @SuppressWarnings("SameParameterValue") @IdRes final int changeId) {
         new PrettyPrinter(context) {
             @Override
             void display(String contentDescription, String symbol, String price, int backgroundResource, String change, List<HistoricalQuote> historicalQuotes) {
@@ -104,6 +104,7 @@ public class FormattingHelper {
                 //noinspection HardCodedStringLiteral
                 views.setInt(changeId, "setBackgroundResource", backgroundResource);
                 views.setTextViewText(changeId, change);
+                views.setContentDescription(listItemId, contentDescription);
             }
         }.go(cursor);
     }
